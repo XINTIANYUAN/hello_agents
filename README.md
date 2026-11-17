@@ -1,4 +1,4 @@
-# Hello-Agents Task1
+# Hello-Agents 入门实践
 
 Datawhale《从零开始构建智能体》的第一章实践。示例会查询北京当前天气，把天气作为参数交给景点搜索工具，再根据工具返回的信息给出一条旅行建议。
 
@@ -28,12 +28,20 @@ python code/chapter1/FirstAgentTest.py
 
 ## 学习记录
 
+### Task1.1 · 第一章 初识智能体
+
+- [学习心得](docs/task1.1/reflections.md) · [课程内容反馈](docs/task1.1/course-feedback.md)
+- [操作过程、踩坑与学习笔记](docs/task1.1/learning-notes.md)
+- [第一章习题解答](docs/task1.1/exercises.md) · [第 1.3 节运行截图](docs/task1.1/task1.1-run.png) · [中文操作演示](https://github.com/XINTIANYUAN/hello_agents/releases/download/v1.1/task1.1-demo.mp4)
+
+### Task1 · 前言与环境配置
+
 - [Task1 学习心得](docs/task1/reflections.md)
 - [Task1 课程内容反馈](docs/task1/course-feedback.md)
 - [Task1 操作过程、踩坑与学习笔记](docs/task1/learning-notes.md)
 
 ## 来源和许可
 
-`code/chapter1/FirstAgentTest.py` 改编自 Datawhale Hello-Agents 贡献者的第一章示例，源版本为 `2eb1c7547018b519b85cb57acf5533f12d65bf8e`。本项目将硬编码配置改为读取环境变量，增加网络超时和本地配置检查，改进模型调用失败及 Action 格式错误时的提示，并要求最终回答以天气工具为准。上游及本改编沿用 CC BY-NC-SA 4.0。[上游代码](https://github.com/datawhalechina/hello-agents/blob/2eb1c7547018b519b85cb57acf5533f12d65bf8e/code/chapter1/FirstAgentTest.py) · [许可证](LICENSE.txt)
+`code/chapter1/FirstAgentTest.py` 改编自 Datawhale Hello-Agents 贡献者的第一章示例，源版本为 `2eb1c7547018b519b85cb57acf5533f12d65bf8e`。本项目将硬编码配置改为读取环境变量，增加网络超时和本地配置检查，改进模型调用失败及 Action 格式错误时的提示，并明确工具调用语法和天气观察的用法。上游及本改编沿用 CC BY-NC-SA 4.0。[上游代码](https://github.com/datawhalechina/hello-agents/blob/2eb1c7547018b519b85cb57acf5533f12d65bf8e/code/chapter1/FirstAgentTest.py) · [许可证](LICENSE.txt)
 
 课程材料可在线阅读。[课程仓库](https://github.com/datawhalechina/hello-agents) · [在线阅读](https://datawhalechina.github.io/hello-agents/#/) · [国内加速](https://hello-agents.datawhale.cc/) · [Extra07 环境配置](https://github.com/datawhalechina/hello-agents/blob/main/Extra-Chapter/Extra07-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.md)

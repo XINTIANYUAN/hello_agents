@@ -23,16 +23,16 @@ AGENT_SYSTEM_PROMPT = """
 Thought: [你的思考过程和下一步计划]
 Action: [你要执行的具体行动]
 
-Action的格式必须是以下之一：
-1. 调用工具：function_name(arg_name="arg_value")
-2. 结束任务：Finish[最终答案]
+Action 可以直接调用工具，例如 Action: get_weather(city="北京")。
+收集到所需信息后，使用 Action: Finish[最终答案] 结束。
 
 # 重要提示:
 - 每次只输出一对Thought-Action
-- Action必须在同一行，不要换行
+- 工具调用必须写在同一行，从工具名开始，直接填写命名参数。不要添加 function_name= 或 Markdown 标记。
+- 调用 get_attraction 时，把 get_weather 返回的天气描述原样填入 weather 参数。
 - 当收集到足够信息可以回答用户问题时，必须使用 Action: Finish[最终答案] 格式结束
 - 当前天气以 get_weather 返回的天气和气温为准。景点搜索摘要只用于选择景点。
-- 按用户要求推荐一个景点，并说明它为什么适合查到的天气。
+- 最终答案用一到两句中文说明天气和气温，只推荐一个景点并给出理由。
 
 请开始吧！
 """
@@ -195,7 +195,9 @@ def main():
             continue
         action_str = action_match.group(1).strip()
 
-        finish_match = re.fullmatch(r"Finish\[(.+)\]", action_str)
+        # 最终答案可以有换行，工具调用仍按单行解析。
+        finish_text = llm_output[action_match.start(1):].strip()
+        finish_match = re.fullmatch(r"Finish\[(.+)\]", finish_text, re.DOTALL)
         if finish_match:
             print(f"任务完成，最终答案: {finish_match.group(1)}")
             return
