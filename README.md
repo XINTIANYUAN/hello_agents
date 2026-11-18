@@ -1,8 +1,8 @@
 # Hello-Agents 入门实践
 
-Datawhale《从零开始构建智能体》的第一章实践。示例会查询北京当前天气，把天气作为参数交给景点搜索工具，再根据工具返回的信息给出一条旅行建议。
+Datawhale《从零开始构建智能体》的前两章实践。第一章用模型和工具搭建旅行助手。第二章通过 ELIZA 对照规则匹配、代词转换和会话记忆。
 
-## 安装和运行
+## 第一章安装和运行
 
 Extra07 的 Python 要求为 3.10 或以上。本项目在 macOS 上使用 Python 3.11.17 验证。运行需要能访问兼容 OpenAI Chat Completions 的模型接口、wttr.in 和 Tavily。
 
@@ -26,7 +26,21 @@ python code/chapter1/FirstAgentTest.py
 
 验收时先看 `get_weather` 的 `Observation` 是否包含天气和温度，再检查 `get_attraction` 是否收到该天气并返回景点信息。最后确认出现 `Action: Finish[...]` 和「任务完成，最终答案」。天气、景点与回答措辞会随运行时间和服务返回而变化。
 
+## 第二章运行 ELIZA
+
+在仓库根目录使用已有的虚拟环境或本地 Python 3.10 及以上版本。两个示例只用标准库，输入 `bye` 结束对话。
+
+```bash
+python code/chapter2/ELIZA.py
+python code/chapter2/ELIZAExtended.py
+```
+
 ## 学习记录
+
+### Task2 · 第二章 智能体发展史
+
+- [学习心得](docs/task2/reflections.md) · [课程内容反馈](docs/task2/course-feedback.md)
+- [操作过程、踩坑、视频学习与笔记](docs/task2/learning-notes.md) · [章末七道习题解答](docs/task2/exercises.md)
 
 ### Task1.1 · 第一章 初识智能体
 
@@ -43,5 +57,7 @@ python code/chapter1/FirstAgentTest.py
 ## 来源和许可
 
 `code/chapter1/FirstAgentTest.py` 改编自 Datawhale Hello-Agents 贡献者的第一章示例，源版本为 `2eb1c7547018b519b85cb57acf5533f12d65bf8e`。本项目将硬编码配置改为读取环境变量，增加网络超时和本地配置检查，改进模型调用失败及 Action 格式错误时的提示，并明确工具调用语法和天气观察的用法。上游及本改编沿用 CC BY-NC-SA 4.0。[上游代码](https://github.com/datawhalechina/hello-agents/blob/2eb1c7547018b519b85cb57acf5533f12d65bf8e/code/chapter1/FirstAgentTest.py) · [许可证](LICENSE.txt)
+
+`code/chapter2/ELIZA.py` 来自 Datawhale 同一版本的第二章配套代码。`ELIZAExtended.py` 在其规则之上增加话题匹配与会话记忆，两份文件沿用仓库的 CC BY-NC-SA 4.0 许可。[第二章上游代码](https://github.com/datawhalechina/hello-agents/blob/2eb1c7547018b519b85cb57acf5533f12d65bf8e/code/chapter2/ELIZA.py)
 
 课程材料可在线阅读。[课程仓库](https://github.com/datawhalechina/hello-agents) · [在线阅读](https://datawhalechina.github.io/hello-agents/#/) · [国内加速](https://hello-agents.datawhale.cc/) · [Extra07 环境配置](https://github.com/datawhalechina/hello-agents/blob/main/Extra-Chapter/Extra07-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.md)
