@@ -1,6 +1,6 @@
 # Hello-Agents 入门实践
 
-Datawhale《从零开始构建智能体》的前两章实践。第一章用模型和工具搭建旅行助手。第二章通过 ELIZA 对照规则匹配、代词转换和会话记忆。
+Datawhale《从零开始构建智能体》的前三章实践。第一章用模型和工具搭建旅行助手。第二章通过 ELIZA 对照规则匹配、代词转换和会话记忆。第三章部署轻量模型并比较生成参数和提示。
 
 ## 第一章安装和运行
 
@@ -35,7 +35,26 @@ python code/chapter2/ELIZA.py
 python code/chapter2/ELIZAExtended.py
 ```
 
+## 第三章本地模型
+
+沿用已有 Ollama 服务，在项目根目录使用 Python 运行。默认模型是习题推荐的 Qwen3-0.6B，对应 Ollama 包 `qwen3:0.6b`。
+
+```bash
+ollama pull qwen3:0.6b
+python code/chapter3/LocalModel.py
+python code/chapter3/N_gram.py
+python code/chapter3/BPE.py
+```
+
+`python code/chapter3/Experiments.py` 会运行采样和提示对比，并把结果写入 `docs/task3/`。生成结果随模型版本、硬件和采样设置变化。
+
 ## 学习记录
+
+### Task3 · 第三章 大语言模型基础
+
+- [学习心得](docs/task3/reflections.md) · [课程内容反馈](docs/task3/course-feedback.md)
+- [操作过程、踩坑、实验与视频学习笔记](docs/task3/learning-notes.md) · [六道习题解答](docs/task3/exercises.md)
+- [本地模型终端截图](docs/task3/local-model-terminal.png) · [完整终端日志](docs/task3/local-model-terminal.txt)
 
 ### Task2 · 第二章 智能体发展史
 
@@ -59,5 +78,7 @@ python code/chapter2/ELIZAExtended.py
 `code/chapter1/FirstAgentTest.py` 改编自 Datawhale Hello-Agents 贡献者的第一章示例，源版本为 `2eb1c7547018b519b85cb57acf5533f12d65bf8e`。本项目将硬编码配置改为读取环境变量，增加网络超时和本地配置检查，改进模型调用失败及 Action 格式错误时的提示，并明确工具调用语法和天气观察的用法。上游及本改编沿用 CC BY-NC-SA 4.0。[上游代码](https://github.com/datawhalechina/hello-agents/blob/2eb1c7547018b519b85cb57acf5533f12d65bf8e/code/chapter1/FirstAgentTest.py) · [许可证](LICENSE.txt)
 
 `code/chapter2/ELIZA.py` 来自 Datawhale 同一版本的第二章配套代码。`ELIZAExtended.py` 在其规则之上增加话题匹配与会话记忆，两份文件沿用仓库的 CC BY-NC-SA 4.0 许可。[第二章上游代码](https://github.com/datawhalechina/hello-agents/blob/2eb1c7547018b519b85cb57acf5533f12d65bf8e/code/chapter2/ELIZA.py)
+
+`code/chapter3/N_gram.py` 和 `BPE.py` 来自上述上游版本。`LocalModel.py`、`Experiments.py` 为本章习题实践，使用 Ollama 运行本机模型。模型权重许可见其发布页面，仓库代码与学习材料沿用 CC BY-NC-SA 4.0。[第三章上游代码](https://github.com/datawhalechina/hello-agents/tree/2eb1c7547018b519b85cb57acf5533f12d65bf8e/code/chapter3) · [Qwen3 模型许可](https://huggingface.co/Qwen/Qwen3-0.6B)
 
 课程材料可在线阅读。[课程仓库](https://github.com/datawhalechina/hello-agents) · [在线阅读](https://datawhalechina.github.io/hello-agents/#/) · [国内加速](https://hello-agents.datawhale.cc/) · [Extra07 环境配置](https://github.com/datawhalechina/hello-agents/blob/main/Extra-Chapter/Extra07-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.md)

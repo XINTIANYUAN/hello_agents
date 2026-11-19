@@ -1,0 +1,27 @@
+Hello-Agents Task3 | 本机模型推理验收
+$ /usr/sbin/sysctl -n machdep.cpu.brand_string hw.memsize
+Apple M5 Max
+51539607552
+[exit 0]
+$ ollama list
+NAME          ID              SIZE      MODIFIED
+qwen3:0.6b    7df6b6e09427    522 MB    2 minutes ago
+qwen3.5:4b    7f3251fa6878    4.0 GB    4 days ago
+[exit 0]
+$ .venv/bin/python -u code/chapter3/LocalModel.py --prompt 你好，请用一句话说明大语言模型是什么。 --output docs/task3/local-model-result.json
+运行时间 2026-11-19T19:45:42+08:00
+本地接口 http://127.0.0.1:11434/api/chat
+模型 qwen3:0.6b，think=false
+采样设置 {"temperature": 0.7, "top_p": 0.8, "top_k": 20, "seed": 42, "num_ctx": 4096, "num_predict": 256}
+问题 你好，请用一句话说明大语言模型是什么。
+
+模型回答
+大语言模型是一种能够理解和生成人类语言的智能系统，它通过学习大量文本数据并进行深度学习，能够理解和生成人类语言。
+
+完成 stop，输出 31 tokens，耗时 0.155 秒
+[exit 0]
+$ ollama ps
+NAME          ID              SIZE      PROCESSOR    CONTEXT    RUNNER      UNTIL
+qwen3:0.6b    7df6b6e09427    600 MB    100% GPU     4096       llamacpp    4 minutes from now
+[exit 0]
+本次本地模型运行完成。

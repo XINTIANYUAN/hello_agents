@@ -1,0 +1,18 @@
+{
+  "model": "qwen3:0.6b",
+  "endpoint": "http://127.0.0.1:11434/api/chat",
+  "prompt": "你好，请用一句话说明大语言模型是什么。",
+  "options": {
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "top_k": 20,
+    "seed": 42,
+    "num_ctx": 4096,
+    "num_predict": 256
+  },
+  "response": "大语言模型是一种能够理解和生成人类语言的智能系统，它通过学习大量文本数据并进行深度学习，能够理解和生成人类语言。",
+  "done_reason": "stop",
+  "prompt_tokens": 26,
+  "output_tokens": 31,
+  "elapsed_seconds": 0.155
+}
