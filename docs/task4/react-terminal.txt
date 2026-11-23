@@ -1,0 +1,24 @@
+$ .venv/bin/python -u code/chapter4/Demo.py react
+Hello-Agents Task4 | react | 2026-11-23T17:28:10+08:00
+模型 qwen3.5:4b，temperature=0
+完整日志 docs/task4/react-full.log
+
+Round 1 | Thought: [已生成简短行动说明]
+Action: Search[ReAct original paper arxiv]
+Observation: 已返回网页，以下节选结果链接。完整摘要见日志。
+https://medium.com/@deejairesearcher/react-paper-explained-simply-how-language-models-can-think-and-act-f500395f88db
+https://arxiv.org/html/2210.03629v3
+https://arxiv.org/pdf/2210.03629
+
+Round 2 | Thought: [已生成简短行动说明]
+Action: ReadPaper[https://arxiv.org/abs/2210.03629]
+Observation: Title: ReAct: Synergizing Reasoning and Acting in Language Models
+Authors: Yao, Shunyu, Zhao, Jeffrey, Yu, Dian, Du, Nan, Shafran, Izhak, Narasimhan, Karthik, Cao, Yuan
+First author: Yao, Shunyu
+Source: https://arxiv.org/abs/2210.03629
+
+Round 3 | Thought: [已生成简短行动说明]
+Action: Finish[Title: ReAct: Synergizing Reasoning and Acting in Language Models, First Author: Shunyu Yao, Source: https://arxiv.org/abs/2210.03629]
+
+Verified: PASS | elapsed 6.595 s
+[exit 0]

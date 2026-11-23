@@ -1,0 +1,30 @@
+{
+  "mode": "react",
+  "started_at": "2026-11-23T17:28:10+08:00",
+  "model": "qwen3.5:4b",
+  "question": "请搜索 ReAct 原论文，读取 arXiv 元数据，给出英文标题、第一作者英文姓名和来源链接。",
+  "answer": "Title: ReAct: Synergizing Reasoning and Acting in Language Models, First Author: Shunyu Yao, Source: https://arxiv.org/abs/2210.03629",
+  "events": [
+    {
+      "step": 1,
+      "action": "Search",
+      "input": "ReAct original paper arxiv",
+      "observation": "ReAct Paper Explained Simply: How Language Models Can Think and Act | by Deepika Jaganathan | Medium\nhttps://medium.com/@deejairesearcher/react-paper-explained-simply-how-language-models-can-think-and-act-f500395f88db\nThis post is a simplified explanation of the paper “ReAct: Synergizing Reasoning and Acting in Language Models” by Yao et al., published on arXiv. All credit for the original research goes to the authors.\n\nWhat you’ll read here is my personal understanding of the paper, along with simplified explanations of the core concepts — so you don’t have to spend hours deciphering the technicalities yourself.\n\nHope this helps, and I’m open to feedback — feel free to share your thoughts.\n\nReAct: Synergizing Reasoning and Acting in Language Models\nhttps://arxiv.org/html/2210.03629v3\n- Shuster et al. (2022a) Kurt Shuster, Mojtaba Komeili, Leonard Adolphs, Stephen Roller, Arthur Szlam, and Jason Weston. Language models that seek for knowledge: Modular search & generation for dialogue and prompt completion. arXiv preprint arXiv:2203.13224, 2022a. [...] - Kojima et al. (2022) Takeshi Kojima, Shixiang Shane Gu, Machel Reid, Yutaka Matsuo, and Yusuke Iwasawa. Large language models are zero-shot reasoners. arXiv preprint arXiv:2205.11916, 2022.\n- Lazaridou et al. (2022) Angeliki Lazaridou, Elena Gribovskaya, Wojciech Stokowiec, and Nikolai Grigorev. Internet-augmented language models through few-shot prompting for open-domain question answering. arXiv preprint arXiv:2203.05115\n\nREAC T : SYNERGIZING REASONING AND ACTING IN LANGUAGE MODELS\nhttps://arxiv.org/pdf/2210.03629\nScott Reed, Konrad Zolna, Emilio Parisotto, Sergio Gomez Colmenarejo, Alexander Novikov, Gabriel Barth-Maron, Mai Gimenez, Yury Sulsky, Jackie Kay, Jost Tobias Springenberg, Tom Eccles, Jake Bruce, Ali Razavi, Ashley Edwards, Nicolas Heess, Yutian Chen, Raia Hadsell, Oriol Vinyals, Mahyar Bordbar, and Nando de Freitas. A generalist agent, 2022. URL https: //arxiv.org/abs/2205.06175. [...] ### 1 INTRODUCTION\n\nA unique feature of human intelligence is the ability to seamlessly combine task-oriented actions with verbal reasoning (or inner speech, Alderson-Day & Fernyhough, 2015), which has been theorized to\n\n# arXiv:2210.03629v3 [cs.CL] 10 Mar 2023 [...] Shuang Li, Xavier Puig, Chris Paxton, Yi",
+      "tool_success": true
+    },
+    {
+      "step": 2,
+      "action": "ReadPaper",
+      "input": "https://arxiv.org/abs/2210.03629",
+      "observation": "Title: ReAct: Synergizing Reasoning and Acting in Language Models\nAuthors: Yao, Shunyu, Zhao, Jeffrey, Yu, Dian, Du, Nan, Shafran, Izhak, Narasimhan, Karthik, Cao, Yuan\nFirst author: Yao, Shunyu\nSource: https://arxiv.org/abs/2210.03629",
+      "tool_success": true
+    },
+    {
+      "step": 3,
+      "action": "Finish",
+      "input": "Title: ReAct: Synergizing Reasoning and Acting in Language Models, First Author: Shunyu Yao, Source: https://arxiv.org/abs/2210.03629"
+    }
+  ],
+  "elapsed_seconds": 6.595,
+  "verified": true
+}

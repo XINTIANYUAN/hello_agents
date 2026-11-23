@@ -1,0 +1,558 @@
+{
+  "started_at": "2026-11-23T17:23:49+08:00",
+  "python_version": "3.11.17",
+  "model": "qwen3.5:4b",
+  "temperature": 0,
+  "note": "单次真实模型对照。故障恢复前两条响应为人工注入，其余请求调用相同模型客户端。",
+  "parser_comparison": {
+    "kind": "fixed_parser_fixtures",
+    "note": "固定输入对照。Finish 仅检查语法，完整 run 还要求已有成功工具观察。",
+    "cases": [
+      {
+        "case": "valid_tool",
+        "format": "text",
+        "input": "Thought: 调用计算器\nAction: Calculator[(123+456)*789/12]",
+        "expected_valid": true,
+        "parser_accepted": true,
+        "dispatch_valid": true,
+        "parsed_action": "Calculator[(123+456)*789/12]",
+        "observation": "38069.25",
+        "matches_expectation": true
+      },
+      {
+        "case": "valid_tool",
+        "format": "json",
+        "input": "{\"thought\": \"调用计算器核对结果\", \"action\": \"Calculator\", \"input\": \"(123+456)*789/12\"}",
+        "expected_valid": true,
+        "parser_accepted": true,
+        "dispatch_valid": true,
+        "parsed_action": "Calculator[(123+456)*789/12]",
+        "observation": "38069.25",
+        "matches_expectation": true
+      },
+      {
+        "case": "valid_finish_syntax",
+        "format": "text",
+        "input": "Thought: 已取得结果\nAction: Finish[38069.25]",
+        "expected_valid": true,
+        "parser_accepted": true,
+        "dispatch_valid": true,
+        "parsed_action": "Finish[38069.25]",
+        "matches_expectation": true
+      },
+      {
+        "case": "valid_finish_syntax",
+        "format": "json",
+        "input": "{\"thought\": \"调用计算器核对结果\", \"action\": \"Finish\", \"input\": \"38069.25\"}",
+        "expected_valid": true,
+        "parser_accepted": true,
+        "dispatch_valid": true,
+        "parsed_action": "Finish[38069.25]",
+        "matches_expectation": true
+      },
+      {
+        "case": "multiline_json_layout",
+        "format": "text",
+        "input": "Thought: 调用计算器\nAction: Calculator[(123+456)*789/12]",
+        "expected_valid": true,
+        "parser_accepted": true,
+        "dispatch_valid": true,
+        "parsed_action": "Calculator[(123+456)*789/12]",
+        "observation": "38069.25",
+        "matches_expectation": true
+      },
+      {
+        "case": "multiline_json_layout",
+        "format": "json",
+        "input": "{\n  \"thought\": \"调用计算器核对结果\",\n  \"action\": \"Calculator\",\n  \"input\": \"(123+456)*789/12\"\n}",
+        "expected_valid": true,
+        "parser_accepted": true,
+        "dispatch_valid": true,
+        "parsed_action": "Calculator[(123+456)*789/12]",
+        "observation": "38069.25",
+        "matches_expectation": true
+      },
+      {
+        "case": "multiline_action_input",
+        "format": "text",
+        "input": "Thought: 调用计算器\nAction: Calculator[\n(123+456)*789/12\n]",
+        "expected_valid": true,
+        "parser_accepted": true,
+        "dispatch_valid": true,
+        "parsed_action": "Calculator[\n(123+456)*789/12\n]",
+        "observation": "38069.25",
+        "matches_expectation": true
+      },
+      {
+        "case": "multiline_action_input",
+        "format": "json",
+        "input": "{\"thought\": \"调用计算器核对结果\", \"action\": \"Calculator\", \"input\": \"\\n(123+456)*789/12\\n\"}",
+        "expected_valid": true,
+        "parser_accepted": true,
+        "dispatch_valid": true,
+        "parsed_action": "Calculator[\n(123+456)*789/12\n]",
+        "observation": "38069.25",
+        "matches_expectation": true
+      },
+      {
+        "case": "missing_field",
+        "format": "text",
+        "input": "Action: Calculator[(123+456)*789/12]",
+        "expected_valid": false,
+        "parser_accepted": false,
+        "dispatch_valid": false,
+        "parsed_action": "Calculator[(123+456)*789/12]",
+        "matches_expectation": true
+      },
+      {
+        "case": "missing_field",
+        "format": "json",
+        "input": "{\"action\": \"Calculator\", \"input\": \"(123+456)*789/12\"}",
+        "expected_valid": false,
+        "parser_accepted": false,
+        "dispatch_valid": false,
+        "matches_expectation": true
+      },
+      {
+        "case": "duplicate_field",
+        "format": "text",
+        "input": "Thought: 第一条说明\nThought: 第二条说明\nAction: Calculator[(123+456)*789/12]",
+        "expected_valid": false,
+        "parser_accepted": true,
+        "dispatch_valid": true,
+        "parsed_action": "Calculator[(123+456)*789/12]",
+        "observation": "38069.25",
+        "matches_expectation": false
+      },
+      {
+        "case": "duplicate_field",
+        "format": "json",
+        "input": "{\"thought\":\"第一条说明\",\"thought\":\"第二条说明\",\"action\":\"Calculator\",\"input\":\"(123+456)*789/12\"}",
+        "expected_valid": false,
+        "parser_accepted": false,
+        "dispatch_valid": false,
+        "matches_expectation": true
+      },
+      {
+        "case": "trailing_action",
+        "format": "text",
+        "input": "Thought: 调用计算器\nAction: Calculator[(123+456)*789/12]\nAction: Finish[38069.25]",
+        "expected_valid": false,
+        "parser_accepted": true,
+        "dispatch_valid": false,
+        "parsed_action": "Calculator[(123+456)*789/12]\nAction: Finish[38069.25]",
+        "observation": "错误：表达式无效。仅支持有限数值、括号和加减乘除，除数不能为零。",
+        "matches_expectation": true
+      },
+      {
+        "case": "trailing_action",
+        "format": "json",
+        "input": "{\"thought\": \"调用计算器核对结果\", \"action\": \"Calculator\", \"input\": \"(123+456)*789/12\"}\n{\"thought\": \"调用计算器核对结果\", \"action\": \"Finish\", \"input\": \"38069.25\"}",
+        "expected_valid": false,
+        "parser_accepted": false,
+        "dispatch_valid": false,
+        "matches_expectation": true
+      },
+      {
+        "case": "trailing_prose",
+        "format": "text",
+        "input": "Thought: 调用计算器\nAction: Calculator[(123+456)*789/12]\n完成了。",
+        "expected_valid": false,
+        "parser_accepted": true,
+        "dispatch_valid": false,
+        "parsed_action": "Calculator[(123+456)*789/12]\n完成了。",
+        "matches_expectation": true
+      },
+      {
+        "case": "trailing_prose",
+        "format": "json",
+        "input": "{\"thought\": \"调用计算器核对结果\", \"action\": \"Calculator\", \"input\": \"(123+456)*789/12\"}\n完成了。",
+        "expected_valid": false,
+        "parser_accepted": false,
+        "dispatch_valid": false,
+        "matches_expectation": true
+      },
+      {
+        "case": "unknown_tool",
+        "format": "text",
+        "input": "Thought: 调用工具\nAction: Unknown[2+3]",
+        "expected_valid": false,
+        "parser_accepted": true,
+        "dispatch_valid": false,
+        "parsed_action": "Unknown[2+3]",
+        "matches_expectation": true
+      },
+      {
+        "case": "unknown_tool",
+        "format": "json",
+        "input": "{\"thought\": \"调用计算器核对结果\", \"action\": \"Unknown\", \"input\": \"2+3\"}",
+        "expected_valid": false,
+        "parser_accepted": true,
+        "dispatch_valid": false,
+        "parsed_action": "Unknown[2+3]",
+        "matches_expectation": true
+      },
+      {
+        "case": "empty_input",
+        "format": "text",
+        "input": "Thought: 调用计算器\nAction: Calculator[]",
+        "expected_valid": false,
+        "parser_accepted": true,
+        "dispatch_valid": false,
+        "parsed_action": "Calculator[]",
+        "matches_expectation": true
+      },
+      {
+        "case": "empty_input",
+        "format": "json",
+        "input": "{\"thought\": \"调用计算器核对结果\", \"action\": \"Calculator\", \"input\": \"\"}",
+        "expected_valid": false,
+        "parser_accepted": false,
+        "dispatch_valid": false,
+        "matches_expectation": true
+      }
+    ],
+    "matching_cases": {
+      "text": 9,
+      "json": 10
+    },
+    "cases_per_format": 10
+  },
+  "few_shot_comparison": [
+    {
+      "kind": "live_few_shot_comparison",
+      "question": "请必须调用 Calculator 工具计算 (123+456)*789/12，然后根据真实工具观察给出数值结果。",
+      "few_shot": false,
+      "injected_responses": [],
+      "expected_value": "38069.25",
+      "answer": "38069.25",
+      "tool_confirmed_expected_value": true,
+      "answer_correct": true,
+      "completed": true,
+      "elapsed_seconds": 0.72,
+      "calls": [
+        {
+          "source": "live_model",
+          "temperature": 0,
+          "success": true,
+          "elapsed_seconds": 0.412
+        },
+        {
+          "source": "live_model",
+          "temperature": 0,
+          "success": true,
+          "elapsed_seconds": 0.308
+        }
+      ],
+      "live_model_calls": 2,
+      "events": [
+        {
+          "step": 1,
+          "action": "Calculator",
+          "input": "(123+456)*789/12",
+          "observation": "38069.25",
+          "tool_success": true
+        },
+        {
+          "step": 2,
+          "action": "Finish",
+          "input": "38069.25"
+        }
+      ],
+      "calculator_observations": [
+        {
+          "input": "(123+456)*789/12",
+          "observation": "38069.25"
+        }
+      ]
+    },
+    {
+      "kind": "live_few_shot_comparison",
+      "question": "请必须调用 Calculator 工具计算 (123+456)*789/12，然后根据真实工具观察给出数值结果。",
+      "few_shot": true,
+      "injected_responses": [],
+      "expected_value": "38069.25",
+      "answer": "38069.25",
+      "tool_confirmed_expected_value": true,
+      "answer_correct": true,
+      "completed": true,
+      "elapsed_seconds": 0.64,
+      "calls": [
+        {
+          "source": "live_model",
+          "temperature": 0,
+          "success": true,
+          "elapsed_seconds": 0.355
+        },
+        {
+          "source": "live_model",
+          "temperature": 0,
+          "success": true,
+          "elapsed_seconds": 0.284
+        }
+      ],
+      "live_model_calls": 2,
+      "events": [
+        {
+          "step": 1,
+          "action": "Calculator",
+          "input": "(123+456)*789/12",
+          "observation": "38069.25",
+          "tool_success": true
+        },
+        {
+          "step": 2,
+          "action": "Finish",
+          "input": "38069.25"
+        }
+      ],
+      "calculator_observations": [
+        {
+          "input": "(123+456)*789/12",
+          "observation": "38069.25"
+        }
+      ]
+    }
+  ],
+  "reflection_role_comparison": [
+    {
+      "role": "efficiency",
+      "task": "编写函数 find_primes(n: int) -> list[int]，返回从 1 到 n（含 n）的所有素数。n 小于 2 时返回空列表，保留完整的函数签名和文档字符串。",
+      "initial_code": "def find_primes(n: int) -> list[int]:\n    \"\"\"Return all prime numbers from 1 through n, inclusive.\"\"\"\n    primes = []\n    for number in range(2, n + 1):\n        is_prime = True\n        for divisor in range(2, number):\n            if number % divisor == 0:\n                is_prime = False\n                break\n        if is_prime:\n            primes.append(number)\n    return primes\n",
+      "completed": true,
+      "final_code": "def find_primes(n: int) -> list[int]:\n    \"\"\"Return all prime numbers from 1 through n, inclusive.\"\"\"\n    if n < 2:\n        return []\n    is_prime = [True] * (n + 1)\n    is_prime[0] = is_prime[1] = False\n    for i in range(2, int(n ** 0.5) + 1):\n        if is_prime[i]:\n            for j in range(i * i, n + 1, i):\n                is_prime[j] = False\n    return [i for i in range(n + 1) if is_prime[i]]",
+      "validation": {
+        "passed": true,
+        "cases": 8
+      },
+      "elapsed_seconds": 2.333,
+      "calls": [
+        {
+          "source": "live_model",
+          "temperature": 0,
+          "success": true,
+          "elapsed_seconds": 0.526
+        },
+        {
+          "source": "live_model",
+          "temperature": 0,
+          "success": true,
+          "elapsed_seconds": 1.283
+        },
+        {
+          "source": "live_model",
+          "temperature": 0,
+          "success": true,
+          "elapsed_seconds": 0.46
+        }
+      ],
+      "stop_reason": "review_passed",
+      "records": [
+        {
+          "type": "execution",
+          "content": "def find_primes(n: int) -> list[int]:\n    \"\"\"Return all prime numbers from 1 through n, inclusive.\"\"\"\n    primes = []\n    for number in range(2, n + 1):\n        is_prime = True\n        for divisor in range(2, number):\n            if number % divisor == 0:\n                is_prime = False\n                break\n        if is_prime:\n            primes.append(number)\n    return primes\n"
+        },
+        {
+          "type": "validation",
+          "content": {
+            "passed": true,
+            "cases": 8
+          }
+        },
+        {
+          "type": "reflection",
+          "content": {
+            "needs_revision": true,
+            "feedback": "将试除法替换为埃拉托斯特尼筛法，时间复杂度从 O(n log log n) 优化至 O(n)，并移除冗余的 divisor 循环。"
+          }
+        },
+        {
+          "type": "execution",
+          "content": "def find_primes(n: int) -> list[int]:\n    \"\"\"Return all prime numbers from 1 through n, inclusive.\"\"\"\n    if n < 2:\n        return []\n    is_prime = [True] * (n + 1)\n    is_prime[0] = is_prime[1] = False\n    for i in range(2, int(n ** 0.5) + 1):\n        if is_prime[i]:\n            for j in range(i * i, n + 1, i):\n                is_prime[j] = False\n    return [i for i in range(n + 1) if is_prime[i]]"
+        },
+        {
+          "type": "validation",
+          "content": {
+            "passed": true,
+            "cases": 8
+          }
+        },
+        {
+          "type": "reflection",
+          "content": {
+            "needs_revision": false,
+            "feedback": "实现正确且高效，采用埃拉托斯特尼筛法时间复杂度为 O(n log log n)，优于试除法，无需修改。"
+          }
+        },
+        {
+          "type": "validation",
+          "content": {
+            "passed": true,
+            "cases": 8
+          }
+        }
+      ]
+    },
+    {
+      "role": "readability",
+      "task": "编写函数 find_primes(n: int) -> list[int]，返回从 1 到 n（含 n）的所有素数。n 小于 2 时返回空列表，保留完整的函数签名和文档字符串。",
+      "initial_code": "def find_primes(n: int) -> list[int]:\n    \"\"\"Return all prime numbers from 1 through n, inclusive.\"\"\"\n    primes = []\n    for number in range(2, n + 1):\n        is_prime = True\n        for divisor in range(2, number):\n            if number % divisor == 0:\n                is_prime = False\n                break\n        if is_prime:\n            primes.append(number)\n    return primes\n",
+      "completed": true,
+      "final_code": "def find_primes(n: int) -> list[int]:\n    \"\"\"Return all prime numbers from 1 through n, inclusive.\n    \n    For n < 2, returns an empty list. Uses the Sieve of Eratosthenes\n    for O(n log log n) time complexity.\n    \"\"\"\n    if n < 2:\n        return []\n    \n    is_prime = [True] * (n + 1)\n    is_prime[0] = is_prime[1] = False\n    \n    p = 2\n    while p * p <= n:\n        if is_prime[p]:\n            for multiple in range(p * p, n + 1, p):\n                is_prime[multiple] = False\n        p += 1\n    \n    return [i for i in range(n + 1) if is_prime[i]]",
+      "validation": {
+        "passed": true,
+        "cases": 8
+      },
+      "elapsed_seconds": 3.796,
+      "calls": [
+        {
+          "source": "live_model",
+          "temperature": 0,
+          "success": true,
+          "elapsed_seconds": 0.836
+        },
+        {
+          "source": "live_model",
+          "temperature": 0,
+          "success": true,
+          "elapsed_seconds": 1.572
+        },
+        {
+          "source": "live_model",
+          "temperature": 0,
+          "success": true,
+          "elapsed_seconds": 1.326
+        }
+      ],
+      "stop_reason": "review_passed",
+      "records": [
+        {
+          "type": "execution",
+          "content": "def find_primes(n: int) -> list[int]:\n    \"\"\"Return all prime numbers from 1 through n, inclusive.\"\"\"\n    primes = []\n    for number in range(2, n + 1):\n        is_prime = True\n        for divisor in range(2, number):\n            if number % divisor == 0:\n                is_prime = False\n                break\n        if is_prime:\n            primes.append(number)\n    return primes\n"
+        },
+        {
+          "type": "validation",
+          "content": {
+            "passed": true,
+            "cases": 8
+          }
+        },
+        {
+          "type": "reflection",
+          "content": {
+            "needs_revision": true,
+            "feedback": "使用埃拉托斯特尼筛法替代 O(n²) 的试除法，将时间复杂度优化至 O(n log log n)，并添加对大数输入的边界处理说明。"
+          }
+        },
+        {
+          "type": "execution",
+          "content": "def find_primes(n: int) -> list[int]:\n    \"\"\"Return all prime numbers from 1 through n, inclusive.\n    \n    For n < 2, returns an empty list. Uses the Sieve of Eratosthenes\n    for O(n log log n) time complexity.\n    \"\"\"\n    if n < 2:\n        return []\n    \n    is_prime = [True] * (n + 1)\n    is_prime[0] = is_prime[1] = False\n    \n    p = 2\n    while p * p <= n:\n        if is_prime[p]:\n            for multiple in range(p * p, n + 1, p):\n                is_prime[multiple] = False\n        p += 1\n    \n    return [i for i in range(n + 1) if is_prime[i]]"
+        },
+        {
+          "type": "validation",
+          "content": {
+            "passed": true,
+            "cases": 8
+          }
+        },
+        {
+          "type": "reflection",
+          "content": {
+            "needs_revision": false,
+            "feedback": "实现正确且高效，无需修改。"
+          }
+        },
+        {
+          "type": "validation",
+          "content": {
+            "passed": true,
+            "cases": 8
+          }
+        }
+      ]
+    }
+  ],
+  "fault_recovery": {
+    "kind": "fault_injection",
+    "question": "请必须调用 Calculator 工具计算 (123+456)*789/12，然后根据真实工具观察给出数值结果。",
+    "few_shot": false,
+    "injected_responses": [
+      "{\"thought\": \"人工故障注入，缺少参数\", \"action\": \"Calculator\"}",
+      "{\"thought\": \"人工故障注入，未知工具\", \"action\": \"UnknownCalculator\", \"input\": \"(123+456)*789/12\"}"
+    ],
+    "expected_value": "38069.25",
+    "answer": "38069.25",
+    "tool_confirmed_expected_value": true,
+    "answer_correct": true,
+    "completed": true,
+    "elapsed_seconds": 0.727,
+    "calls": [
+      {
+        "source": "fault_injection",
+        "temperature": 0,
+        "success": true,
+        "elapsed_seconds": 0.0
+      },
+      {
+        "source": "fault_injection",
+        "temperature": 0,
+        "success": true,
+        "elapsed_seconds": 0.0
+      },
+      {
+        "source": "live_model",
+        "temperature": 0,
+        "success": true,
+        "elapsed_seconds": 0.43
+      },
+      {
+        "source": "live_model",
+        "temperature": 0,
+        "success": true,
+        "elapsed_seconds": 0.297
+      }
+    ],
+    "live_model_calls": 2,
+    "events": [
+      {
+        "step": 1,
+        "action": "Invalid",
+        "input": "",
+        "observation": "错误：动作解析或选择失败。JSON 必须且只能含 thought、action、input 三个字符串字段。",
+        "tool_success": false
+      },
+      {
+        "step": 2,
+        "action": "UnknownCalculator",
+        "input": "(123+456)*789/12",
+        "observation": "错误：未登记工具 UnknownCalculator。",
+        "tool_success": false
+      },
+      {
+        "step": 3,
+        "action": "Calculator",
+        "input": "(123+456)*789/12",
+        "observation": "38069.25",
+        "tool_success": true
+      },
+      {
+        "step": 4,
+        "action": "Finish",
+        "input": "38069.25"
+      }
+    ],
+    "calculator_observations": [
+      {
+        "input": "(123+456)*789/12",
+        "observation": "38069.25"
+      }
+    ],
+    "first_two_injected_calls_rejected": true,
+    "recovered": true
+  },
+  "finished_at": "2026-11-23T17:25:09+08:00",
+  "limitations": [
+    "每个条件只运行一次，样本用于观察执行轨迹。",
+    "素数验证覆盖八个参考输入，复杂度描述保留模型原文，另需算法分析或性能测量核对。"
+  ]
+}

@@ -1,6 +1,6 @@
 # Hello-Agents 入门实践
 
-Datawhale《从零开始构建智能体》的前三章实践。第一章用模型和工具搭建旅行助手。第二章通过 ELIZA 对照规则匹配、代词转换和会话记忆。第三章部署轻量模型并比较生成参数和提示。
+Datawhale《从零开始构建智能体》的前四章实践。第一章用模型和工具搭建旅行助手。第二章通过 ELIZA 对照规则匹配、代词转换和会话记忆。第三章部署轻量模型并比较生成参数和提示。第四章实现 ReAct、Plan-and-Solve 和 Reflection 循环。
 
 ## 第一章安装和运行
 
@@ -48,7 +48,25 @@ python code/chapter3/BPE.py
 
 `python code/chapter3/Experiments.py` 会运行采样和提示对比，并把结果写入 `docs/task3/`。生成结果随模型版本、硬件和采样设置变化。
 
+## 第四章三种经典范式
+
+使用 Task1 已有环境和项目根目录的配置，可直接运行并保存本次验证记录。
+
+```bash
+python code/chapter4/Demo.py react
+python code/chapter4/Demo.py plan
+python code/chapter4/Demo.py reflection
+```
+
+ReAct 使用本机模型、Tavily 搜索和 arXiv 页面。Plan-and-Solve 运行苹果应用题，Reflection 生成并验证素数函数。独立入口为同目录的 `ReAct.py`、`Plan_and_solve.py`、`Reflection.py`。`Experiments.py` 可复现动作解析、计算器恢复及提示对照，并写入 `docs/task4/experiments.json`。
+
 ## 学习记录
+
+### Task4 · 第四章 智能体经典范式构建
+
+- [学习心得](docs/task4/reflections.md) · [课程内容反馈](docs/task4/course-feedback.md)
+- [操作过程、踩坑、截图与视频学习笔记](docs/task4/learning-notes.md) · [七道习题解答](docs/task4/exercises.md)
+- [ReAct 截图](docs/task4/react-terminal.png) · [Plan-and-Solve 截图](docs/task4/plan-terminal.png) · [Reflection 截图](docs/task4/reflection-terminal.png)
 
 ### Task3 · 第三章 大语言模型基础
 
@@ -80,5 +98,7 @@ python code/chapter3/BPE.py
 `code/chapter2/ELIZA.py` 来自 Datawhale 同一版本的第二章配套代码。`ELIZAExtended.py` 在其规则之上增加话题匹配与会话记忆，两份文件沿用仓库的 CC BY-NC-SA 4.0 许可。[第二章上游代码](https://github.com/datawhalechina/hello-agents/blob/2eb1c7547018b519b85cb57acf5533f12d65bf8e/code/chapter2/ELIZA.py)
 
 `code/chapter3/N_gram.py` 和 `BPE.py` 来自上述上游版本。`LocalModel.py`、`Experiments.py` 为本章习题实践，使用 Ollama 运行本机模型。模型权重许可见其发布页面，仓库代码与学习材料沿用 CC BY-NC-SA 4.0。[第三章上游代码](https://github.com/datawhalechina/hello-agents/tree/2eb1c7547018b519b85cb57acf5533f12d65bf8e/code/chapter3) · [Qwen3 模型许可](https://huggingface.co/Qwen/Qwen3-0.6B)
+
+`code/chapter4/` 改编自同一上游版本的第四章范式示例。本项目兼容已有配置、复用 Tavily、增加论文元数据和计算器工具，补充结构化动作、错误反馈及素数函数验证。保留教学中的三类循环，源码和笔记沿用 CC BY-NC-SA 4.0。[第四章上游代码](https://github.com/datawhalechina/hello-agents/tree/2eb1c7547018b519b85cb57acf5533f12d65bf8e/code/chapter4)
 
 课程材料可在线阅读。[课程仓库](https://github.com/datawhalechina/hello-agents) · [在线阅读](https://datawhalechina.github.io/hello-agents/#/) · [国内加速](https://hello-agents.datawhale.cc/) · [Extra07 环境配置](https://github.com/datawhalechina/hello-agents/blob/main/Extra-Chapter/Extra07-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.md)

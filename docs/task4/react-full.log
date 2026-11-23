@@ -1,0 +1,36 @@
+
+--- ReAct 第 1 轮 ---
+Thought: [模型已生成行动说明]
+Action: Search[ReAct original paper arxiv]
+Observation: ReAct Paper Explained Simply: How Language Models Can Think and Act | by Deepika Jaganathan | Medium
+https://medium.com/@deejairesearcher/react-paper-explained-simply-how-language-models-can-think-and-act-f500395f88db
+This post is a simplified explanation of the paper “ReAct: Synergizing Reasoning and Acting in Language Models” by Yao et al., published on arXiv. All credit for the original research goes to the authors.
+
+What you’ll read here is my personal understanding of the paper, along with simplified explanations of the core concepts — so you don’t have to spend hours deciphering the technicalities yourself.
+
+Hope this helps, and I’m open to feedback — feel free to share your thoughts.
+
+ReAct: Synergizing Reasoning and Acting in Language Models
+https://arxiv.org/html/2210.03629v3
+- Shuster et al. (2022a) Kurt Shuster, Mojtaba Komeili, Leonard Adolphs, Stephen Roller, Arthur Szlam, and Jason Weston. Language models that seek for knowledge: Modular search & generation for dialogue and prompt completion. arXiv preprint arXiv:2203.13224, 2022a. [...] - Kojima et al. (2022) Takeshi Kojima, Shixiang Shane Gu, Machel Reid, Yutaka Matsuo, and Yusuke Iwasawa. Large language models are zero-shot reasoners. arXiv preprint arXiv:2205.11916, 2022.
+- Lazaridou et al. (2022) Angeliki Lazaridou, Elena Gribovskaya, Wojciech Stokowiec, and Nikolai Grigorev. Internet-augmented language models through few-shot prompting for open-domain question answering. arXiv preprint arXiv:2203.05115
+
+REAC T : SYNERGIZING REASONING AND ACTING IN LANGUAGE MODELS
+https://arxiv.org/pdf/2210.03629
+Scott Reed, Konrad Zolna, Emilio Parisotto, Sergio Gomez Colmenarejo, Alexander Novikov, Gabriel Barth-Maron, Mai Gimenez, Yury Sulsky, Jackie Kay, Jost Tobias Springenberg, Tom Eccles, Jake Bruce, Ali Razavi, Ashley Edwards, Nicolas Heess, Yutian Chen, Raia Hadsell, Oriol Vinyals, Mahyar Bordbar, and Nando de Freitas. A generalist agent, 2022. URL https: //arxiv.org/abs/2205.06175. [...] ### 1 INTRODUCTION
+
+A unique feature of human intelligence is the ability to seamlessly combine task-oriented actions with verbal reasoning (or inner speech, Alderson-Day & Fernyhough, 2015), which has been theorized to
+
+# arXiv:2210.03629v3 [cs.CL] 10 Mar 2023 [...] Shuang Li, Xavier Puig, Chris Paxton, Yi
+
+--- ReAct 第 2 轮 ---
+Thought: [模型已生成行动说明]
+Action: ReadPaper[https://arxiv.org/abs/2210.03629]
+Observation: Title: ReAct: Synergizing Reasoning and Acting in Language Models
+Authors: Yao, Shunyu, Zhao, Jeffrey, Yu, Dian, Du, Nan, Shafran, Izhak, Narasimhan, Karthik, Cao, Yuan
+First author: Yao, Shunyu
+Source: https://arxiv.org/abs/2210.03629
+
+--- ReAct 第 3 轮 ---
+Thought: [模型已生成行动说明]
+Action: Finish[Title: ReAct: Synergizing Reasoning and Acting in Language Models, First Author: Shunyu Yao, Source: https://arxiv.org/abs/2210.03629]
