@@ -1,6 +1,6 @@
 # Hello-Agents 入门实践
 
-Datawhale《从零开始构建智能体》的前四章实践。第一章用模型和工具搭建旅行助手。第二章通过 ELIZA 对照规则匹配、代词转换和会话记忆。第三章部署轻量模型并比较生成参数和提示。第四章实现 ReAct、Plan-and-Solve 和 Reflection 循环。
+Datawhale《从零开始构建智能体》的前五章实践。第一章用模型和工具搭建旅行助手。第二章通过 ELIZA 对照规则匹配、代词转换和会话记忆。第三章部署轻量模型并比较生成参数和提示。第四章实现 ReAct、Plan-and-Solve 和 Reflection 循环。第五章在本机 n8n 搭建带知识检索、计算器和持久化记忆的学习助手。
 
 ## 第一章安装和运行
 
@@ -60,7 +60,26 @@ python code/chapter4/Demo.py reflection
 
 ReAct 使用本机模型、Tavily 搜索和 arXiv 页面。Plan-and-Solve 运行苹果应用题，Reflection 生成并验证素数函数。独立入口为同目录的 `ReAct.py`、`Plan_and_solve.py`、`Reflection.py`。`Experiments.py` 可复现动作解析、计算器恢复及提示对照，并写入 `docs/task4/experiments.json`。
 
+## 第五章 n8n 低代码智能体
+
+本机实操使用项目专用 Node.js 24.22.3 和 n8n 2.49.7，复用 Ollama 的 `qwen3.5:4b`。知识检索使用 Qdrant 与 `nomic-embed-text`，对话记忆使用启用 AOF 的 Redis。已有本机配置保存在 Git 忽略的 `.task5-local/` 中，安装目录为 `.task5-runtime/`。
+
+```bash
+.venv/bin/python code/chapter5/start-services.py
+.venv/bin/python code/chapter5/start-services.py --status
+```
+
+启动后访问 [本机 n8n](http://localhost:5685)。在本机查看 `.task5-local/n8n-owner.json` 获取学习实例的登录信息。工作流 [task5-agent.json](code/chapter5/task5-agent.json) 可以导入 n8n，绑定本机 Ollama、Redis、Qdrant 三份凭证后，点击 Execute。`Test Input` 节点可修改问题与会话标识。重复演示工具调用时使用新的 `sessionId`，避免模型直接沿用旧答复。
+
+首次在其他机器部署时，需要安装对应运行时、建立本机凭证和服务配置，再按[学习笔记](docs/task5/learning-notes.md)导入。仓库不包含模型权重、数据库、密码和安装目录。
+
 ## 学习记录
+
+### Task5 · 第五章 基于低代码平台的智能体搭建
+
+- [学习心得](docs/task5/reflections.md) · [课程内容反馈](docs/task5/course-feedback.md)
+- [操作过程、踩坑、截图与视频学习笔记](docs/task5/learning-notes.md) · [七道习题解答](docs/task5/exercises.md)
+- [n8n 平台实操截图](docs/task5/n8n-platform-run.jpg) · [真实执行记录](docs/task5/execution.json) · [重启持久化与记忆验证](docs/task5/persistence-check.json)
 
 ### Task4 · 第四章 智能体经典范式构建
 
@@ -102,3 +121,5 @@ ReAct 使用本机模型、Tavily 搜索和 arXiv 页面。Plan-and-Solve 运行
 `code/chapter4/` 改编自同一上游版本的第四章范式示例。本项目兼容已有配置、复用 Tavily、增加论文元数据和计算器工具，补充结构化动作、错误反馈及素数函数验证。保留教学中的三类循环，源码和笔记沿用 CC BY-NC-SA 4.0。[第四章上游代码](https://github.com/datawhalechina/hello-agents/tree/2eb1c7547018b519b85cb57acf5533f12d65bf8e/code/chapter4)
 
 课程材料可在线阅读。[课程仓库](https://github.com/datawhalechina/hello-agents) · [在线阅读](https://datawhalechina.github.io/hello-agents/#/) · [国内加速](https://hello-agents.datawhale.cc/) · [Extra07 环境配置](https://github.com/datawhalechina/hello-agents/blob/main/Extra-Chapter/Extra07-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.md)
+
+`code/chapter5/task5-agent.json` 为依据第五章 n8n 案例重新搭建的本地学习工作流，将邮件输入改为手动合成输入、回复改为草稿，将内存知识库和聊天记忆替换为 Qdrant 与 Redis，并复用本机 Ollama。`knowledge.json` 是依据课程与本次任务要求整理的三条学习资料，配套脚本用于本机服务启动和知识索引。课程改编与学习材料继续沿用 CC BY-NC-SA 4.0；n8n、Redis、Qdrant 和模型自身许可见各自发布页面。[第五章原文与案例](https://github.com/datawhalechina/hello-agents/tree/2eb1c7547018b519b85cb57acf5533f12d65bf8e/docs/chapter5)

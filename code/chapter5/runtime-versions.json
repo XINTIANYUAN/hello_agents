@@ -1,0 +1,46 @@
+{
+  "verified_on": "2026-11-26",
+  "platform": "macOS arm64",
+  "node": {
+    "version": "24.22.3",
+    "npm_package": "node@24.22.3",
+    "executable": ".task5-runtime/node/node_modules/node/bin/node",
+    "source": "https://www.npmjs.com/package/node/v/24.22.3"
+  },
+  "n8n": {
+    "version": "2.49.7",
+    "npm_package": "n8n@2.49.7",
+    "entrypoint": ".task5-runtime/app/node_modules/n8n/bin/n8n",
+    "user_folder": ".task5-local/n8n",
+    "url": "http://127.0.0.1:5685",
+    "source": "https://github.com/n8n-io/n8n/releases/tag/n8n%402.49.7"
+  },
+  "redis": {
+    "version": "7.4.11",
+    "executable": "~/.local/redis-7.4.11/bin/redis-server",
+    "config": ".task5-local/redis.conf",
+    "host": "127.0.0.1",
+    "port": 6385,
+    "source": "https://github.com/redis/redis/releases/tag/7.4.11"
+  },
+  "qdrant": {
+    "version": "1.20.2",
+    "executable": ".task5-runtime/qdrant/qdrant",
+    "config": ".task5-runtime/qdrant/config.yaml",
+    "url": "http://127.0.0.1:6335",
+    "source": "https://github.com/qdrant/qdrant/releases/tag/v1.20.2"
+  },
+  "ollama": {
+    "version": "0.40.16",
+    "url": "http://127.0.0.1:11434",
+    "models": ["qwen3.5:4b", "nomic-embed-text"]
+  },
+  "npm_installation": {
+    "version": "11.20.0",
+    "ignore_scripts_flag_used": false,
+    "pending_lifecycle_script_packages": 14,
+    "validated_modules": ["sqlite3", "isolated-vm", "@parcel/watcher", "protobufjs", "ssh2"],
+    "sqlite_library_version": "3.44.2",
+    "private_log": ".task5-runtime/install-n8n.log"
+  }
+}

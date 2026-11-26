@@ -1,0 +1,12 @@
+{
+  "collection": "hello_agents_task5",
+  "embedding_model": "nomic-embed-text",
+  "dimension": 768,
+  "documents": 3,
+  "point_ids": [
+    "df4a2817-4fd8-5ef8-a0ba-f7af33ed6f72",
+    "808bc0f7-6478-5d63-a521-58ecb1f393c5",
+    "50767a86-40ee-542f-98d9-37df7c3d9a2b"
+  ],
+  "storage": "Qdrant disk-backed collection"
+}

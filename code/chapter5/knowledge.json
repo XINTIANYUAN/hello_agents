@@ -1,0 +1,17 @@
+[
+  {
+    "doc_id": "task5-pass",
+    "content": "Hello-Agents Task5 是第五章“基于低代码平台的智能体搭建”。过关条件是在任意一个低代码平台搭建自己的智能体，实际跑通一次并保存平台实操截图。打卡材料包括习题、学习笔记、视频学习记录和实操截图。",
+    "source": "https://github.com/datawhalechina/hello-agents/tree/main/docs/chapter5"
+  },
+  {
+    "doc_id": "task5-platforms",
+    "content": "第五章介绍 Coze、Dify、FastGPT、n8n 四个平台。Coze 示例是每日 AI 简报，Dify 示例是多功能个人助手，FastGPT 示例是知识库问答，n8n 示例是集成模型、记忆和工具的助手。",
+    "source": "https://github.com/datawhalechina/hello-agents/tree/main/docs/chapter5"
+  },
+  {
+    "doc_id": "task5-memory",
+    "content": "本项目 Task5 实操用 n8n 编排 AI Agent，模型为本机 Ollama qwen3.5:4b，知识向量使用 Qdrant，聊天记忆使用 Redis。知识库用于检索课程资料，聊天记忆用于回忆同一会话中用户已经提供的信息。",
+    "source": "local:Hello-Agents-Task5"
+  }
+]

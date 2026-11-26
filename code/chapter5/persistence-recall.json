@@ -1,0 +1,275 @@
+{
+  "id": "Task5MemoryRecall",
+  "name": "Hello-Agents Task5 重启后记忆验证",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "6e632ff0-95d2-52d9-ae1e-d59b0f284c0a",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -620,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "manual",
+        "assignments": {
+          "assignments": [
+            {
+              "id": "task5-question",
+              "name": "chatInput",
+              "value": "我之前让你记住的称呼是什么？请回忆真实的会话记录。然后调用知识库列出第五章介绍的四个平台。",
+              "type": "string"
+            },
+            {
+              "id": "task5-session",
+              "name": "sessionId",
+              "value": "task5-persistence-20261126",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": false,
+        "options": {}
+      },
+      "id": "42572df9-a4d6-5d03-a51d-f26b554a7682",
+      "name": "Test Input",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -380,
+        120
+      ],
+      "notes": "编辑 chatInput 可测试后续提问。保留 sessionId 可复用同一段 Redis 对话。",
+      "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.chatInput }}",
+        "hasOutputParser": false,
+        "needsFallback": false,
+        "options": {
+          "systemMessage": "你是 Hello-Agents Task5 学习助手。使用中文简洁回答，记住本会话中用户提供的称呼。查询课程资料和过关条件时调用 Task5_Knowledge 一次，传入简短检索词。需要算术时调用 Calculator 一次，只传入纯算式。用户在同一请求中要求两者时，先检索知识库再调用计算器。收到所需工具结果后给出最终答复，避免重复调用。根据真实工具返回和本会话信息组织回答，引用课程资料时附上返回的来源。资料缺失或工具失败时说明实际情况。学习建议用一句话。",
+          "maxIterations": 6,
+          "returnIntermediateSteps": true,
+          "enableStreaming": false
+        }
+      },
+      "id": "d56f8cdc-2122-555c-bbf1-3495038e4111",
+      "name": "Task5 AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -100,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "model": "qwen3.5:4b",
+        "options": {
+          "think": false,
+          "temperature": 0,
+          "numCtx": 8192,
+          "numPredict": 1024
+        }
+      },
+      "id": "4badef6c-f9ad-5ae1-86f4-156e556806d9",
+      "name": "Ollama Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        -300,
+        430
+      ],
+      "credentials": {
+        "ollamaApi": {
+          "id": "Task5OllamaLocal",
+          "name": "Task5 Ollama Local"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Test Input').first().json.sessionId }}",
+        "sessionTTL": 0,
+        "contextWindowLength": 6
+      },
+      "id": "7f618227-1581-5a71-b11b-99204d100082",
+      "name": "Redis Chat Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryRedisChat",
+      "typeVersion": 1.6,
+      "position": [
+        -60,
+        430
+      ],
+      "credentials": {
+        "redis": {
+          "id": "Task5RedisLocal",
+          "name": "Task5 Redis Local"
+        }
+      },
+      "notes": "会话键来自 Test Input，sessionTTL 为 0。",
+      "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "检索 Hello-Agents Task5 第五章课程资料、过关条件和学习记录要求。输入简短中文查询，返回文档内容与来源。",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "hello_agents_task5",
+          "mode": "id"
+        },
+        "topK": 3,
+        "includeDocumentMetadata": true,
+        "useReranker": false,
+        "options": {
+          "contentPayloadKey": "content",
+          "metadataPayloadKey": "metadata"
+        }
+      },
+      "id": "4fa78f97-64fd-574f-9746-5c53a76d3de0",
+      "name": "Task5_Knowledge",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.4,
+      "position": [
+        200,
+        430
+      ],
+      "credentials": {
+        "qdrantApi": {
+          "id": "Task5QdrantLocal",
+          "name": "Task5 Qdrant Local"
+        }
+      },
+      "notes": "Qdrant 集合 hello_agents_task5，向量维度 768。",
+      "notesInFlow": true
+    },
+    {
+      "parameters": {},
+      "id": "7d39bbee-1ab1-51d0-8dc9-4833ad158d45",
+      "name": "Calculator",
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        480,
+        430
+      ]
+    },
+    {
+      "parameters": {
+        "model": "nomic-embed-text:latest"
+      },
+      "id": "69d7750f-7209-5c6a-a86b-71a9a8e14507",
+      "name": "Ollama Embeddings",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
+      "typeVersion": 1,
+      "position": [
+        200,
+        680
+      ],
+      "credentials": {
+        "ollamaApi": {
+          "id": "Task5OllamaLocal",
+          "name": "Task5 Ollama Local"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Test Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Test Input": {
+      "main": [
+        [
+          {
+            "node": "Task5 AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Task5 AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Task5 AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Task5_Knowledge": {
+      "ai_tool": [
+        [
+          {
+            "node": "Task5 AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "Task5 AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Embeddings": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Task5_Knowledge",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Shanghai",
+    "saveDataSuccessExecution": "all",
+    "saveDataErrorExecution": "all",
+    "saveExecutionProgress": true
+  },
+  "pinData": {},
+  "versionId": "4db95d1d-9fdb-56eb-a818-15ecc3ce0e21",
+  "tags": []
+}
